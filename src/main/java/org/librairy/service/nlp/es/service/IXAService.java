@@ -84,18 +84,16 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
                     Annotation annotation = new Annotation();
                     annotation.setTarget(term.getStr());
 
-                    if (!Strings.isNullOrEmpty(term.getCase()))
-                        annotation.setTermcase(term.getCase());
-                    if (!Strings.isNullOrEmpty(term.getLemma()))
-                        annotation.setLemma(term.getLemma());
-                    if (!Strings.isNullOrEmpty(term.getForm()))
-                        annotation.setForm(term.getForm());
-                    if (!Strings.isNullOrEmpty(term.getMorphofeat()))
-                        annotation.setMorphoFeat(term.getMorphofeat());
-                    if (!Strings.isNullOrEmpty(term.getPos()))
-                        annotation.setPos(PoSTranslator.toPoSTag(term.getPos()).name());
-                    if (!Strings.isNullOrEmpty(term.getType()))
-                        annotation.setType(term.getType());
+                    annotation.setTermcase(!Strings.isNullOrEmpty(term.getCase())?term.getCase():"");
+                    annotation.setLemma(!Strings.isNullOrEmpty(term.getLemma())?term.getLemma():"");
+                    annotation.setForm(!Strings.isNullOrEmpty(term.getForm())?term.getForm():"");
+                    annotation.setMorphoFeat(!Strings.isNullOrEmpty(term.getMorphofeat())?term.getMorphofeat():"");
+                    annotation.setSentiment("");
+                    annotation.setForm(!Strings.isNullOrEmpty(term.getForm())?term.getForm():"");
+                    annotation.setType(!Strings.isNullOrEmpty(term.getType())?term.getType():"");
+                    annotation.setPos(!Strings.isNullOrEmpty(term.getPos())?term.getPos():"");
+                    annotation.setPara("");
+                    annotation.setOffset("");
 
                     return annotation;
                 })
