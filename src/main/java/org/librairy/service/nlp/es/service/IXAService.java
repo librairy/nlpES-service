@@ -85,7 +85,7 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
                     annotation.setTarget(term.getStr());
 
                     if (!Strings.isNullOrEmpty(term.getCase()))
-                        annotation.setCase$(term.getCase());
+                        annotation.setTermcase(term.getCase());
                     if (!Strings.isNullOrEmpty(term.getLemma()))
                         annotation.setLemma(term.getLemma());
                     if (!Strings.isNullOrEmpty(term.getForm()))
