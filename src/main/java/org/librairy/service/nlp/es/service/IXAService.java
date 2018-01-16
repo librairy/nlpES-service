@@ -91,7 +91,7 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
                     annotation.setSentiment("");
                     annotation.setForm(!Strings.isNullOrEmpty(term.getForm())?term.getForm():"");
                     annotation.setType(!Strings.isNullOrEmpty(term.getType())?term.getType():"");
-                    annotation.setPos(!Strings.isNullOrEmpty(term.getPos())?term.getPos():"");
+                    annotation.setPos(!Strings.isNullOrEmpty(term.getPos())?PoSTranslator.toPoSTag(term.getPos()).name():"");
                     annotation.setPara("");
                     annotation.setOffset("");
 
