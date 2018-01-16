@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +16,7 @@ import java.util.Map;
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
 @SpringBootApplication
-@ComponentScan({
-        "org.librairy.service.nlp.es"
-})
+@ComponentScan({"org.librairy.service"})
 public class Application  {
 
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
@@ -35,7 +34,7 @@ public class Application  {
         application.setDefaultProperties(map);
         application.run(args);
 
-        LOG.info("Http-REST listening at 0.0.0.0:" + restPort + "/nlp-es/");
+        LOG.info("Http-REST listening at 0.0.0.0:" + restPort);
     }
 
 }

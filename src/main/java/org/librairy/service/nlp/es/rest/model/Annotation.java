@@ -1,33 +1,25 @@
 package org.librairy.service.nlp.es.rest.model;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
+import org.apache.avro.Schema;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Annotation extends org.librairy.service.nlp.facade.model.Annotation {
 
-public class Annotation {
-
-    private String target;
-
-    private Map<String,String> values;
-
-    public Annotation() {
+    public Annotation(org.librairy.service.nlp.facade.model.Annotation annotation){
+        BeanUtils.copyProperties(annotation,this);
     }
 
-    public String getTarget() {
-        return target;
-    }
-
-    public Map<String, String> getValues() {
-        return values;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public void setValues(Map<String, String> values) {
-        this.values = values;
+    @Override
+    @ApiModelProperty(hidden = true)
+    @JsonIgnore
+    public Schema getSchema() {
+        return super.getSchema();
     }
 }

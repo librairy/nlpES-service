@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = NlpESService.class)
+@SpringBootTest(classes = IXAService.class)
 @WebAppConfiguration
 public class NlpEsServiceTest {
 
 
     @Autowired
-    NlpESService service;
+    IXAService service;
 
     @Test
     public void annotation() throws IOException {
@@ -40,7 +40,7 @@ public class NlpEsServiceTest {
 
         annotations.forEach(annotation -> System.out.println("Annotation: " + annotation));
 
-        List<String> pos = annotations.stream().map(a -> a.getValue().get("pos")).collect(Collectors.toList());
+        List<String> pos = annotations.stream().map(a -> a.getPos()).collect(Collectors.toList());
 
         Assert.assertArrayEquals(new String[]{PoS.PRONOUN.name(),PoS.VERB.name(),PoS.ARTICLE.name(),PoS.ADJECTIVE.name(),PoS.NOUN.name()}, pos.toArray());
 

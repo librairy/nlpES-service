@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.avro.AvroRemoteException;
-import org.librairy.service.nlp.es.service.NlpESService;
+import org.librairy.service.nlp.es.service.IXAService;
 import org.librairy.service.nlp.es.rest.model.ProcessRequest;
 import org.librairy.service.nlp.es.rest.model.ProcessResult;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class ProcessController {
     private static final Logger LOG = LoggerFactory.getLogger(ProcessController.class);
 
     @Autowired
-    NlpESService service;
+    IXAService service;
 
     @PostConstruct
     public void setup(){

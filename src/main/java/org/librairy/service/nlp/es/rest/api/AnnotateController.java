@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.avro.AvroRemoteException;
-import org.librairy.service.nlp.es.rest.model.*;
-import org.librairy.service.nlp.es.service.NlpESService;
+import org.librairy.service.nlp.es.rest.model.Annotation;
+import org.librairy.service.nlp.es.rest.model.AnnotationRequest;
+import org.librairy.service.nlp.es.rest.model.AnnotationResult;
+import org.librairy.service.nlp.es.service.IXAService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class AnnotateController {
     private static final Logger LOG = LoggerFactory.getLogger(AnnotateController.class);
 
     @Autowired
-    NlpESService service;
+    IXAService service;
 
     @PostConstruct
     public void setup(){
@@ -50,16 +52,8 @@ public class AnnotateController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public AnnotationResult analyze(@RequestBody AnnotationRequest annotationRequest)  {
         try {
-            List<org.librairy.service.nlp.facade.model.Annotation> annotations = service.annotate(annotationRequest.getText(), annotationRequest.getFilter());
-
-            List<Annotation> annotationsRest = annotations.stream().map(a -> {
-                Annotation a2 = new Annotation();
-                a2.setTarget(a.getTarget());
-                a2.setValues(a.getValue());
-                return a2;
-            }).collect(Collectors.toList());
-
-            return new AnnotationResult(annotationsRest);
+            List<Annotation> annotations = service.annotate(annotationRequest.getText(), annotationRequest.getFilter()).stream().map(a -> new Annotation(a)).collect(Collectors.toList());
+            return new AnnotationResult(annotations);
         } catch (AvroRemoteException e) {
             throw new RuntimeException(e);
         }
