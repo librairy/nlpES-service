@@ -24,17 +24,20 @@ public class Application  {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
 
-
-        String restPort = System.getenv("REST_PORT");
-
-        if (Strings.isNullOrEmpty(restPort)) restPort = "7777";
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("SERVER_PORT", restPort);
-        application.setDefaultProperties(map);
+//
+//        String restPort = System.getenv("REST_PORT");
+//        if (Strings.isNullOrEmpty(restPort)) restPort = "7777";
+//
+//        String restPath = System.getenv("REST_PATH");
+//        if (Strings.isNullOrEmpty(restPath)) restPath = "/";
+//
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("SERVER_PORT", restPort);
+//        map.put("SERVER_CONTEXTPATH", restPath);
+//        application.setDefaultProperties(map);
         application.run(args);
 
-        LOG.info("Http-REST listening at 0.0.0.0:" + restPort);
+//        LOG.info("Http-REST listening at 0.0.0.0:" + restPort + restPath);
     }
 
 }
