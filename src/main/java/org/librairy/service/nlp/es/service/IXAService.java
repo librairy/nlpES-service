@@ -43,6 +43,10 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
     String hardParagraph      ;
     String noseg              ;
 
+    private Properties annotateProperties;
+
+    private Annotate posAnnotator;
+
 
     @PostConstruct
     public void setup() throws IOException {
@@ -59,6 +63,21 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
         noseg              = "false";
 
 
+        this.annotateProperties = new Properties();
+
+        annotateProperties.setProperty("normalize", normalize);
+        annotateProperties.setProperty("untokenizable", untokenizable);
+        annotateProperties.setProperty("hardParagraph", hardParagraph);
+        annotateProperties.setProperty("noseg",noseg);
+        annotateProperties.setProperty("model", model);
+        annotateProperties.setProperty("lemmatizerModel", lemmatizerModel);
+        annotateProperties.setProperty("language", language);
+        annotateProperties.setProperty("multiwords", multiwords);
+        annotateProperties.setProperty("dictTag", dictag);
+        annotateProperties.setProperty("dictPath", dictag);
+        annotateProperties.setProperty("ruleBasedOption", dictag);
+
+        this.posAnnotator    = new Annotate(annotateProperties);
     }
 
     @Override
@@ -112,20 +131,6 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
 
             kaf = new KAFDocument(language, kafVersion);
 
-            final Properties annotateProperties = new Properties();
-
-            annotateProperties.setProperty("normalize", normalize);
-            annotateProperties.setProperty("untokenizable", untokenizable);
-            annotateProperties.setProperty("hardParagraph", hardParagraph);
-            annotateProperties.setProperty("noseg",noseg);
-            annotateProperties.setProperty("model", model);
-            annotateProperties.setProperty("lemmatizerModel", lemmatizerModel);
-            annotateProperties.setProperty("language", language);
-            annotateProperties.setProperty("multiwords", multiwords);
-            annotateProperties.setProperty("dictTag", dictag);
-            annotateProperties.setProperty("dictPath", dictag);
-            annotateProperties.setProperty("ruleBasedOption", dictag);
-
 //            annotateProperties.setProperty("resourcesDirectory","src/main/resources");
 
 
@@ -139,7 +144,7 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
 
 
             // PosTagging
-            final Annotate posAnnotator    = new Annotate(annotateProperties);
+
             final KAFDocument.LinguisticProcessor newLp = kaf.addLinguisticProcessor("terms", "ixa-pipe-pos-" + Files.getNameWithoutExtension(model), version + "-" + commit);
             newLp.setBeginTimestamp();
             posAnnotator.annotatePOSToKAF(kaf);
