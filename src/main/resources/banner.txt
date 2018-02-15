@@ -1,13 +1,10 @@
-            ┬  ┬┌┐ ┬─┐╔═╗╦┬─┐┬ ┬
-            │  │├┴┐├┬┘╠═╣║├┬┘└┬┘
-            ┴─┘┴└─┘┴└─╩ ╩╩┴└─ ┴
-╔╗╔╦  ╔═╗   ╔═╗╔═╗   ╔═╗┌─┐┬─┐┬  ┬┬┌─┐┌─┐
-║║║║  ╠═╝───║╣ ╚═╗───╚═╗├┤ ├┬┘└┐┌┘││  ├┤
-╝╚╝╩═╝╩     ╚═╝╚═╝   ╚═╝└─┘┴└─ └┘ ┴└─┘└─┘
+           ┬  ┬┌┐ ┬─┐╔═╗╦┬─┐┬ ┬  ╔╗╔╦  ╔═╗   ╔═╗╔═╗  ╔═╗┌─┐┬─┐┬  ┬┬┌─┐┌─┐
+           │  │├┴┐├┬┘╠═╣║├┬┘└┬┘  ║║║║  ╠═╝───║╣ ╚═╗  ╚═╗├┤ ├┬┘└┐┌┘││  ├┤
+           ┴─┘┴└─┘┴└─╩ ╩╩┴└─ ┴   ╝╚╝╩═╝╩     ╚═╝╚═╝  ╚═╝└─┘┴└─ └┘ ┴└─┘└─┘
 
-          cbadenes@fi.upm.es
-          ocorcho@fi.upm.es
+                                 cbadenes@fi.upm.es
+                                  ocorcho@fi.upm.es
 
-     Ontology Engineering Group
-  Universidad Politecnica de Madrid
-                2018
+                            Ontology Engineering Group
+                        Universidad Politecnica de Madrid
+                                       2018
