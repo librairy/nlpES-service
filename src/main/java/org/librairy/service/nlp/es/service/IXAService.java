@@ -54,11 +54,11 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
         model              = Paths.get(resourceFolder,"morph-models-1.5.0/es/es-pos-perceptron-autodict01-ancora-2.0.bin").toFile().getAbsolutePath();
         lemmatizerModel    = Paths.get(resourceFolder,"morph-models-1.5.0/es/es-lemma-perceptron-ancora-2.0.bin").toFile().getAbsolutePath();
         language           = "es";
-        multiwords         = "true";
+        multiwords         = "false"; //true
         dictag             = Paths.get(resourceFolder,"tag").toFile().getAbsolutePath();
         kafVersion         = "1.5.0";
-        normalize          = "true"; // false
-        untokenizable      = "false";
+        normalize          = "true";
+        untokenizable      = "false"; // false
         hardParagraph      = "false";
         noseg              = "false";
 

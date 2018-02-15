@@ -41,21 +41,15 @@ public class AvroIntTest {
 
         client.open(host,port);
 
-        List<String> texts = Arrays.asList(new String[]{
-                "este sería un primer ejemplo",
-                "aquí ya estamos tratando un segundo ejemplo",
-                "con este terminamos. Es el último ejemplo"});
+        String text = "texto de prueba";
 
+        String result = client.process(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.LEMMA);
 
-        texts.forEach(text -> {
-            try {
-                client.process(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.RAW);
-            } catch (AvroRemoteException e) {
-                e.printStackTrace();
-            }
-        });
+        LOG.info("Result: " + result);
 
         client.close();
+
+        System.out.println("Done!");
     }
 
     @Test
