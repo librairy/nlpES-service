@@ -6,6 +6,8 @@ import org.apache.avro.AvroRemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.librairy.service.nlp.es.service.IXAService;
+import org.librairy.service.nlp.es.service.NLPServiceImpl;
+import org.librairy.service.nlp.es.service.ServiceManager;
 import org.librairy.service.nlp.facade.AvroClient;
 import org.librairy.service.nlp.facade.model.Form;
 import org.librairy.service.nlp.facade.model.PoS;
@@ -24,7 +26,7 @@ import java.util.List;
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {AvroController.class,IXAService.class})
+@SpringBootTest(classes = {AvroController.class,NLPServiceImpl.class, ServiceManager.class})
 @WebAppConfiguration
 public class AvroIntTest {
 

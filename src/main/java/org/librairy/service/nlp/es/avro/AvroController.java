@@ -1,7 +1,7 @@
 package org.librairy.service.nlp.es.avro;
 
-import org.librairy.service.nlp.es.service.IXAService;
 import org.librairy.service.nlp.facade.AvroServer;
+import org.librairy.service.nlp.facade.model.NlpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AvroController {
     private static final Logger LOG = LoggerFactory.getLogger(AvroController.class);
 
     @Autowired
-    IXAService service;
+    NlpService service;
 
     @Value("#{environment['AVRO_PORT']?:${nlp.avro.port}}")
     Integer port;

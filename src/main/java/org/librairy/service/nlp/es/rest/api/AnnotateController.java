@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.avro.AvroRemoteException;
-import org.librairy.service.nlp.es.service.IXAService;
+import org.librairy.service.nlp.facade.model.NlpService;
 import org.librairy.service.nlp.facade.rest.model.Annotation;
 import org.librairy.service.nlp.facade.rest.model.AnnotationRequest;
 import org.librairy.service.nlp.facade.rest.model.AnnotationResult;
@@ -33,7 +33,7 @@ public class AnnotateController {
     private static final Logger LOG = LoggerFactory.getLogger(AnnotateController.class);
 
     @Autowired
-    IXAService service;
+    NlpService service;
 
     @PostConstruct
     public void setup(){

@@ -5,13 +5,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.avro.AvroRemoteException;
-import org.librairy.service.nlp.es.service.IXAService;
+import org.librairy.service.nlp.facade.model.NlpService;
 import org.librairy.service.nlp.facade.rest.model.ProcessRequest;
 import org.librairy.service.nlp.facade.rest.model.ProcessResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,7 +30,7 @@ public class ProcessController {
     private static final Logger LOG = LoggerFactory.getLogger(ProcessController.class);
 
     @Autowired
-    IXAService service;
+    NlpService service;
 
     @PostConstruct
     public void setup(){
