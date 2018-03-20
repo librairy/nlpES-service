@@ -64,7 +64,7 @@ public class RestIntTest {
 
         List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
         String text = "este es el texto que va a ser analizado";
-        Form form = Form.STEM;
+        Form form = Form.LEMMA;
         ProcessRequest req = new ProcessRequest(text,types,form);
 
         HttpResponse<JsonNode> response = Unirest.post("http://localhost:8081/nlp-es/process")
