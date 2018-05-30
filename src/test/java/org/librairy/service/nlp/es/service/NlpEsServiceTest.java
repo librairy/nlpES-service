@@ -1,11 +1,15 @@
 package org.librairy.service.nlp.es.service;
 
+import org.apache.avro.AvroRemoteException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.librairy.service.nlp.facade.model.Annotation;
 import org.librairy.service.nlp.facade.model.PoS;
+import org.librairy.service.nlp.facade.model.Token;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class NlpEsServiceTest {
 
-
+    private static final Logger LOG = LoggerFactory.getLogger(NlpEsServiceTest.class);
 
     IXAService service;
 
@@ -48,6 +52,20 @@ public class NlpEsServiceTest {
         List<String> pos = annotations.stream().map(a -> a.getPos()).collect(Collectors.toList());
 
         Assert.assertArrayEquals(new String[]{PoS.PRONOUN.name(),PoS.VERB.name(),PoS.ARTICLE.name(),PoS.ADJECTIVE.name(),PoS.NOUN.name()}, pos.toArray());
+
+    }
+
+
+
+    @Test
+    public void group() throws AvroRemoteException {
+        String text = "Este es mi primer ejemplo";
+
+        List<PoS> filter = Collections.emptyList();
+
+        List<Token> bows = service.group(text, filter);
+
+        bows.forEach(token -> LOG.info("" + token));
 
     }
 }
