@@ -5,13 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.avro.AvroRemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.librairy.service.nlp.es.service.IXAService;
+import org.librairy.service.nlp.es.controllers.AvroController;
 import org.librairy.service.nlp.es.service.NLPServiceImpl;
 import org.librairy.service.nlp.es.service.ServiceManager;
 import org.librairy.service.nlp.facade.AvroClient;
 import org.librairy.service.nlp.facade.model.Form;
 import org.librairy.service.nlp.facade.model.PoS;
-import org.librairy.service.nlp.facade.rest.model.ProcessRequest;
+import org.librairy.service.nlp.facade.rest.model.TokensRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +45,7 @@ public class AvroIntTest {
 
         String text = "texto de prueba";
 
-        String result = client.process(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.LEMMA);
+        String result = client.tokens(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.LEMMA, false);
 
         LOG.info("Result: " + result);
 
@@ -74,7 +74,7 @@ public class AvroIntTest {
 
         texts.forEach(text -> {
             try {
-                client.annotate(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}));
+                client.annotations(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), false, false);
             } catch (AvroRemoteException e) {
                 e.printStackTrace();
             }
@@ -89,7 +89,7 @@ public class AvroIntTest {
         List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
         String text = "texto";
         Form form = Form.LEMMA;
-        ProcessRequest req = new ProcessRequest(text,types,form);
+        TokensRequest req = new TokensRequest(text,types,form, false);
 
         ObjectMapper mapper = new ObjectMapper();
 

@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.librairy.service.nlp.es.Application;
 import org.librairy.service.nlp.facade.model.Form;
 import org.librairy.service.nlp.facade.model.PoS;
-import org.librairy.service.nlp.facade.rest.model.ProcessRequest;
+import org.librairy.service.nlp.facade.rest.model.TokensRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +65,7 @@ public class RestIntTest {
         List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
         String text = "este es el texto que va a ser analizado";
         Form form = Form.LEMMA;
-        ProcessRequest req = new ProcessRequest(text,types,form);
+        TokensRequest req = new TokensRequest(text,types,form,false);
 
         HttpResponse<JsonNode> response = Unirest.post("http://localhost:8081/nlp-es/process")
                 .header("accept", "application/json")

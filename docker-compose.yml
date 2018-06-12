@@ -1,0 +1,13 @@
+version: '2'
+services:
+  dbpedia-spotlight:
+    image: librairy/dbpedia-es:latest
+    restart: always
+  nlp-es-service:
+    image: librairy/nlp-es-service:latest
+    restart: always
+    ports:
+     - "7777:7777"
+     - "65111:65111"
+    environment:
+      - REST_PATH=/es

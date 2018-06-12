@@ -18,16 +18,18 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
-public class IXAService implements org.librairy.service.nlp.facade.model.NlpService {
+public class IXAService  {
 
     private static final Logger LOG = LoggerFactory.getLogger(IXAService.class);
 
@@ -89,64 +91,52 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
         }
     }
 
-    @Override
-    public String process(String text, List<PoS> filter, Form form) throws AvroRemoteException {
+    public String tokens(String text, List<PoS> filter, Form form) throws AvroRemoteException {
 
         return analyze(text,filter).stream()
-                    .map(term-> {
-                        switch (form){
-                            case LEMMA: return normalize(term);
-                            default: return term.getStr().toLowerCase();
-                        }
-                    })
-                    .collect(Collectors.joining(" "));
-    }
-
-    private String normalize(Term term){
-        return Strings.isNullOrEmpty(term.getLemma()) || CharMatcher.DIGIT.matchesAllOf(term.getLemma())? term.getStr() : term.getLemma().toLowerCase();
+                .map(term-> {
+                    switch (form){
+                        case LEMMA: return Strings.isNullOrEmpty(term.getLemma())? term.getStr() : term.getLemma().toLowerCase();
+                        default: return term.getStr().toLowerCase();
+                    }
+                })
+                .collect(Collectors.joining(" "));
     }
 
 
-    @Override
-    public List<Token> group(String text, List<PoS> filter) throws AvroRemoteException {
-
-        Map<Token, Long> groups = analyze(text, filter).stream()
-                .map(term -> new Token(term.getStr(), normalize(term), PoSTranslator.toPoSTag(term.getPos()), 0l))
-                .collect(Collectors.groupingBy(token -> token, Collectors.counting()));
-
-        return groups.entrySet().stream().map( entry -> {
-            org.librairy.service.nlp.facade.model.Token token = entry.getKey();
-            token.setFreq(entry.getValue());
-            return token;
-        }).collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<Annotation> annotate(String text, List<PoS> filter) throws AvroRemoteException {
-        List<Term> terms = analyze(text, filter);
+    public List<Annotation> annotations(String text, List<PoS> filter) throws AvroRemoteException {
+        List<Term> terms = new ArrayList<>();
+        Matcher matcher = Pattern.compile(".{1,1000}(,|.$)").matcher(text);
+        while (matcher.find()){
+            terms.addAll(analyze(text, filter));
+        }
         return terms.stream()
                 .map(term -> {
 
-                    Annotation annotation = new Annotation();
-                    annotation.setTarget(term.getStr());
+                    Token token = new Token();
+                    token.setTarget(term.getStr());
+                    token.setLemma(!Strings.isNullOrEmpty(term.getLemma())?term.getLemma():"");
 
-                    annotation.setTermcase(!Strings.isNullOrEmpty(term.getCase())?term.getCase():"");
-                    annotation.setLemma(!Strings.isNullOrEmpty(term.getLemma())?term.getLemma():"");
-                    annotation.setForm(!Strings.isNullOrEmpty(term.getForm())?term.getForm():"");
-                    annotation.setMorphoFeat(!Strings.isNullOrEmpty(term.getMorphofeat())?term.getMorphofeat():"");
-                    annotation.setSentiment("");
-                    annotation.setForm(!Strings.isNullOrEmpty(term.getForm())?term.getForm():"");
-                    annotation.setType(!Strings.isNullOrEmpty(term.getType())?term.getType():"");
-                    annotation.setPos(!Strings.isNullOrEmpty(term.getPos())?PoSTranslator.toPoSTag(term.getPos()).name():"");
-                    annotation.setPara("");
-                    annotation.setOffset("");
+                    if ((CharMatcher.javaLetter().matchesAllOf(term.getStr())) && CharMatcher.javaDigit().matchesAllOf(term.getLemma())){
+                        // special case:
+                        // target = first
+                        // lemma = 1
+                        token.setLemma(term.getStr());
+                    }
+
+                    token.setMorphoFeat(!Strings.isNullOrEmpty(term.getMorphofeat())?term.getMorphofeat():"");
+                    token.setPos(!Strings.isNullOrEmpty(term.getPos())?PoSTranslator.toPoSTag(term.getPos()):PoS.NOUN);
+                    token.setType(!Strings.isNullOrEmpty(term.getType())?term.getType():"");
+
+                    Annotation annotation = new Annotation();
+                    if (term.getSentiment() != null) annotation.setSentiment(term.getSentiment().getPolarity());
+                    annotation.setToken(token);
+                    annotation.setOffset(Long.valueOf(term.getSpan().getTargets().get(0).getOffset()));
 
                     return annotation;
                 })
                 .collect(Collectors.toList());
     }
-
 
     private List<Term> analyze(String text, List<PoS> filter){
         List<Term> terms = Collections.emptyList();
@@ -159,9 +149,6 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
             BufferedReader breader = new BufferedReader(new InputStreamReader(is));
 
             kaf = new KAFDocument(language, kafVersion);
-
-//            annotateProperties.setProperty("resourcesDirectory","src/main/resources");
-
 
             final String version        = CLI.class.getPackage().getImplementationVersion();
             final String commit         = CLI.class.getPackage().getSpecificationVersion();
@@ -178,23 +165,6 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
             newLp.setBeginTimestamp();
             posAnnotator.annotatePOSToKAF(kaf);
 
-
-            // Debug
-//            kaf.getAnnotations(KAFDocument.AnnotationType.TERM).stream().map( annotation -> (Term) annotation).forEach(term -> System.out.println(term.getStr() + "\t " + term.getLemma() +"\t " + term.getPos()));
-            //System.out.println(posAnnotator.annotatePOSToCoNLL(kaf));
-
-//            // Named-Entity Annotator
-//            final eus.ixa.ixa.pipe.nerc.Annotate neAnnotator = new eus.ixa.ixa.pipe.nerc.Annotate(annotateProperties);
-//            neAnnotator.annotateNEsToKAF(kaf);
-//
-//            for(KAFDocument.AnnotationType aType : KAFDocument.AnnotationType.values()){
-//                List<Annotation> out = kaf.getAnnotations(aType);
-//                System.out.println("Annotations '" + aType.name()+"' found: " + out.size());
-//            }
-
-
-
-
             // Filtering
             List<String> postags = filter.stream().flatMap( type -> PoSTranslator.toTermPoS(type).stream()).collect(Collectors.toList());
 
@@ -202,7 +172,6 @@ public class IXAService implements org.librairy.service.nlp.facade.model.NlpServ
                     .map(annotation -> (Term) annotation)
                     .filter(term -> postags.isEmpty() || postags.contains(term.getPos()))
                     .collect(Collectors.toList());
-
 
             breader.close();
         } catch (IOException e) {
