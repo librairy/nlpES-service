@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.librairy.service.nlp.facade.model.Annotation;
 import org.librairy.service.nlp.facade.model.PoS;
+import org.librairy.service.nlp.service.IXAService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

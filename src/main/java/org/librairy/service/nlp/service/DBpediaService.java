@@ -1,6 +1,6 @@
-package org.librairy.service.nlp.es.service;
+package org.librairy.service.nlp.service;
 
-import org.librairy.service.nlp.es.client.SpotlightClient;
+import org.librairy.service.nlp.client.SpotlightClient;
 import org.librairy.service.nlp.facade.model.Annotation;
 import org.librairy.service.nlp.facade.model.PoS;
 import org.librairy.service.nlp.facade.model.Token;

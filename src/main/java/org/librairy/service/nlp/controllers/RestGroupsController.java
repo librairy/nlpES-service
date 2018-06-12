@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.controllers;
+package org.librairy.service.nlp.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -6,8 +6,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.avro.AvroRemoteException;
 import org.librairy.service.nlp.facade.model.NlpService;
-import org.librairy.service.nlp.facade.rest.model.TokensRequest;
-import org.librairy.service.nlp.facade.rest.model.TokensResult;
+import org.librairy.service.nlp.facade.rest.model.Group;
+import org.librairy.service.nlp.facade.rest.model.GroupsRequest;
+import org.librairy.service.nlp.facade.rest.model.GroupsResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.stream.Collectors;
 
-/**
- * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
- */
 @RestController
-@RequestMapping("/tokens")
-@Api(tags = "/tokens", description = "handle tokens from a text")
-public class RestTokensController {
+@RequestMapping("/groups")
+@Api(tags = "/groups", description = "handle bag of tokens from a text")
+public class RestGroupsController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RestTokensController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RestGroupsController.class);
 
     @Autowired
     NlpService service;
@@ -44,14 +43,15 @@ public class RestTokensController {
 
     }
 
-    @ApiOperation(value = "create tokens from a given text", nickname = "postProcess", response=TokensResult.class)
+    @ApiOperation(value = "create annotations and group by frequency from a given text", nickname = "postGroup", response= GroupsResult.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = TokensResult.class),
+            @ApiResponse(code = 200, message = "Success", response = GroupsResult.class),
     })
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<TokensResult> analyze(@RequestBody TokensRequest request)  {
+    public ResponseEntity<GroupsResult> group(@RequestBody GroupsRequest request)  {
         try {
-            return new ResponseEntity(new TokensResult(service.tokens(request.getText(), request.getFilter(), request.getForm(), request.getMultigrams())), HttpStatus.OK);
+            GroupsResult groups = new GroupsResult(service.groups(request.getText(), request.getFilter(), request.getMultigrams(), request.getReferences()).stream().map(t -> new Group(t)).collect(Collectors.toList()));
+            return new ResponseEntity( groups, HttpStatus.OK);
         } catch (AvroRemoteException e) {
             return new ResponseEntity("internal service seems down", HttpStatus.FAILED_DEPENDENCY);
         } catch (Exception e){

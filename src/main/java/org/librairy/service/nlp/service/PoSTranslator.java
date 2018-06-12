@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.service;
+package org.librairy.service.nlp.service;
 
 import org.librairy.service.nlp.facade.model.PoS;
 

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.librairy.service.nlp.es.Application;
+import org.librairy.service.nlp.Application;
 import org.librairy.service.nlp.facade.model.Form;
 import org.librairy.service.nlp.facade.model.PoS;
 import org.librairy.service.nlp.facade.rest.model.TokensRequest;

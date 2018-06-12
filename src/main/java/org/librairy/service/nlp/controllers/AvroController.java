@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.controllers;
+package org.librairy.service.nlp.controllers;
 
 import org.librairy.service.nlp.facade.AvroServer;
 import org.librairy.service.nlp.facade.model.NlpService;

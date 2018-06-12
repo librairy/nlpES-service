@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.client;
+package org.librairy.service.nlp.client;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;

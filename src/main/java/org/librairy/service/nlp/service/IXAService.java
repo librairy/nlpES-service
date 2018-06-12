@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.service;
+package org.librairy.service.nlp.service;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;

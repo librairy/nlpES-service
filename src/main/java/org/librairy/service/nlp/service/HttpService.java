@@ -1,4 +1,4 @@
-package org.librairy.service.nlp.es.service;
+package org.librairy.service.nlp.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

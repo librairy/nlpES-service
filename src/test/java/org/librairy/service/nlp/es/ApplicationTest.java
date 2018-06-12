@@ -1,5 +1,6 @@
 package org.librairy.service.nlp.es;
 
+import org.librairy.service.nlp.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
