@@ -11,7 +11,7 @@
 
 	<groupId>org.librairy</groupId>
     <artifactId>nlpES-service</artifactId>
-    <version>0.4</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
     <name>nlpES-service</name>
     <description>NLP API for Spanish texts available by HTTP-REST and AVRO</description>
