@@ -25,7 +25,7 @@ To run NLP-EN service using the default dataset:
 1. You should be able to monitor the progress by: `docker-compose logs -f`
 
 - The above command runs two services: DBpedia Spotlight and librAIry NLP-EN, and uses the settings specified within `docker-compose.yml`.
-- The HTTP Restful-API should be available at: `http://localhost:7777/en` 
+- The HTTP Restful-API should be available at: [http://localhost:7777/es](http://localhost:7777/es) 
 
 ## Run in distributed mode
 Create a [Swarm](https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/) and configure as services as you need.
