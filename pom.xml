@@ -75,7 +75,6 @@
 		<librairy.nlp.version>[1.0,)</librairy.nlp.version>
         <librairy.swagger.version>[0.1,)</librairy.swagger.version>
         <springfox.version>2.7.0</springfox.version>
-        <testutils.version>1.0.0</testutils.version>
         <unirest.version>1.4.9</unirest.version>
     </properties>
 
@@ -168,11 +167,6 @@
                 <version>${mockito.version}</version>
             </dependency>
             <dependency>
-                <groupId>es.cbadenes.lab</groupId>
-                <artifactId>test-utils</artifactId>
-                <version>${testutils.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
@@ -243,11 +237,6 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>es.cbadenes.lab</groupId>
-            <artifactId>test-utils</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
