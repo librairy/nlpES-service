@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.librairy.service.nlp.Application;
 import org.librairy.service.nlp.facade.model.Form;
 import org.librairy.service.nlp.facade.model.PoS;
+import org.librairy.service.nlp.facade.rest.model.AnnotationsRequest;
+import org.librairy.service.nlp.facade.rest.model.GroupsRequest;
 import org.librairy.service.nlp.facade.rest.model.TokensRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +29,6 @@ import java.util.List;
 /**
  * @author Badenes Olmedo, Carlos <cbadenes@fi.upm.es>
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
 public class RestIntTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestIntTest.class);
@@ -59,15 +58,50 @@ public class RestIntTest {
     }
 
     @Test
-    @Ignore
-    public void post() throws UnirestException {
+    public void tokens() throws UnirestException {
 
         List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
         String text = "este es el texto que va a ser analizado";
         Form form = Form.LEMMA;
         TokensRequest req = new TokensRequest(text,types,form,false);
 
-        HttpResponse<JsonNode> response = Unirest.post("http://localhost:8081/nlp-es/process")
+        HttpResponse<JsonNode> response = Unirest.post("http://librairy.linkeddata.es/es/tokens")
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(req)
+                .asJson();
+
+        LOG.info("Response: " + response.getBody());
+
+
+    }
+
+    @Test
+    public void annotations() throws UnirestException {
+
+        List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
+        String text = "este es el texto que va a ser analizado";
+        AnnotationsRequest req = new AnnotationsRequest(text,types, false,false);
+
+        HttpResponse<JsonNode> response = Unirest.post("http://librairy.linkeddata.es/es/annotations")
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(req)
+                .asJson();
+
+        LOG.info("Response: " + response.getBody());
+
+
+    }
+
+    @Test
+    public void groups() throws UnirestException {
+
+        List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
+        String text = "este es el texto que va a ser analizado";
+        GroupsRequest req = new GroupsRequest(text,types, false,false);
+
+        HttpResponse<JsonNode> response = Unirest.post("http://librairy.linkeddata.es/es/groups")
                 .header("accept", "application/json")
                 .header("Content-Type", "application/json")
                 .body(req)
