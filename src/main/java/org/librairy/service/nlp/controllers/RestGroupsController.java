@@ -50,7 +50,7 @@ public class RestGroupsController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<GroupsResult> group(@RequestBody GroupsRequest request)  {
         try {
-            GroupsResult groups = new GroupsResult(service.groups(request.getText(), request.getFilter(), request.getMultigrams(), request.getReferences()).stream().map(t -> new Group(t)).collect(Collectors.toList()));
+            GroupsResult groups = new GroupsResult(service.groups(request.getText(), request.getFilter(), request.getMultigrams(), request.getReferences(), request.getLang()).stream().map(t -> new Group(t)).collect(Collectors.toList()));
             return new ResponseEntity( groups, HttpStatus.OK);
         } catch (AvroRemoteException e) {
             return new ResponseEntity("internal service seems down", HttpStatus.FAILED_DEPENDENCY);

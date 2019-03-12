@@ -51,7 +51,7 @@ public class RestTokensController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<TokensResult> analyze(@RequestBody TokensRequest request)  {
         try {
-            return new ResponseEntity(new TokensResult(service.tokens(request.getText(), request.getFilter(), request.getForm(), request.getMultigrams())), HttpStatus.OK);
+            return new ResponseEntity(new TokensResult(service.tokens(request.getText(), request.getFilter(), request.getForm(), request.getMultigrams(), request.getLang())), HttpStatus.OK);
         } catch (AvroRemoteException e) {
             return new ResponseEntity("internal service seems down", HttpStatus.FAILED_DEPENDENCY);
         } catch (Exception e){

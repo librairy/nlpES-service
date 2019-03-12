@@ -54,7 +54,7 @@ public class RestAnnotationsController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<AnnotationsResult> analyze(@RequestBody AnnotationsRequest request)  {
         try {
-            List<Annotation> annotations = service.annotations(request.getText(), request.getFilter(), request.getMultigrams(), request.getReferences()).stream().map(a -> new Annotation(a)).collect(Collectors.toList());
+            List<Annotation> annotations = service.annotations(request.getText(), request.getFilter(), request.getMultigrams(), request.getReferences(), request.getLang()).stream().map(a -> new Annotation(a)).collect(Collectors.toList());
             return new ResponseEntity(new AnnotationsResult(annotations), HttpStatus.OK);
         } catch (AvroRemoteException e) {
             return new ResponseEntity("internal service seems down", HttpStatus.FAILED_DEPENDENCY);

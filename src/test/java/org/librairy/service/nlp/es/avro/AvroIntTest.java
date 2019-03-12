@@ -45,7 +45,7 @@ public class AvroIntTest {
 
         String text = "texto de prueba";
 
-        String result = client.tokens(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.LEMMA, false);
+        String result = client.tokens(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), Form.LEMMA, false, "es");
 
         LOG.info("Result: " + result);
 
@@ -74,7 +74,7 @@ public class AvroIntTest {
 
         texts.forEach(text -> {
             try {
-                client.annotations(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), false, false);
+                client.annotations(text, Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB, PoS.ADVERB, PoS.ADJECTIVE}), false, false, "es");
             } catch (AvroRemoteException e) {
                 e.printStackTrace();
             }
@@ -89,7 +89,7 @@ public class AvroIntTest {
         List<PoS> types = Arrays.asList(new PoS[]{PoS.NOUN, PoS.VERB});
         String text = "texto";
         Form form = Form.LEMMA;
-        TokensRequest req = new TokensRequest(text,types,form, false);
+        TokensRequest req = new TokensRequest(text,types,form, false, "es");
 
         ObjectMapper mapper = new ObjectMapper();
 

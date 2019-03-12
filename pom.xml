@@ -11,7 +11,7 @@
 
 	<groupId>org.librairy</groupId>
     <artifactId>nlpES-service</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
     <name>nlpES-service</name>
     <description>NLP API for Spanish texts available by HTTP-REST and AVRO</description>
@@ -74,6 +74,9 @@
         <mockito.version>1.9.5</mockito.version>
 		<librairy.nlp.version>[1.0,)</librairy.nlp.version>
         <librairy.swagger.version>[0.1,)</librairy.swagger.version>
+        <lucene.version>4.10.4</lucene.version>
+        <stanford.version>3.7.0</stanford.version><!-- 3.5.2 -->
+        <stanford.parser.version>1.0</stanford.parser.version>
         <springfox.version>2.7.0</springfox.version>
         <unirest.version>1.4.9</unirest.version>
     </properties>
@@ -95,12 +98,46 @@
                 <version>${librairy.nlp.version}</version>
             </dependency>
 
+            <!-- librAIry multi-word annotator -->
+            <dependency>
+                <groupId>org.librairy</groupId>
+                <artifactId>multi-word-annotator</artifactId>
+                <version>[1.0,)</version>
+            </dependency>
 
             <!-- librAIry Swagger -->
             <dependency>
                 <groupId>org.librairy</groupId>
                 <artifactId>swagger</artifactId>
                 <version>${librairy.swagger.version}</version>
+            </dependency>
+
+            <!-- Stanford Libraries -->
+            <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>${stanford.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-parser</artifactId>
+                <version>${stanford.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>${stanford.version}</version>
+                <classifier>models-spanish</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucene.version}</version>
             </dependency>
 
             <!-- IXA-Pipes -->
@@ -171,11 +208,6 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.mashape.unirest</groupId>
-                <artifactId>unirest-java</artifactId>
-                <version>${unirest.version}</version>
-            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -199,6 +231,36 @@
             <groupId>org.librairy</groupId>
             <artifactId>swagger</artifactId>
         </dependency>
+
+        <!-- librAIry multi-word annotator -->
+        <dependency>
+            <groupId>org.librairy</groupId>
+            <artifactId>multi-word-annotator</artifactId>
+        </dependency>
+
+        <!-- Stanford Libraries -->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <classifier>models-spanish</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+        </dependency>
+
 
         <!-- IXA-Pipes -->
         <dependency>
